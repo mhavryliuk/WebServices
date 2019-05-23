@@ -5,18 +5,18 @@ namespace WebServices.Controllers
 {
     public class HomeController : Controller
     {
-        private ReservationRepository repo = ReservationRepository.Current;
+        private readonly ReservationRepository _repo = ReservationRepository.Current;
 
         public ViewResult Index()
         {
-            return View(repo.GetAll());
+            return View(_repo.GetAll());
         }
 
         public ActionResult Add(Reservation item)
         {
             if (ModelState.IsValid)
             {
-                repo.Add(item);
+                _repo.Add(item);
 
                 return RedirectToAction("Index");
             }
@@ -26,14 +26,14 @@ namespace WebServices.Controllers
 
         public ActionResult Remove(int id)
         {
-            repo.Remove(id);
+            _repo.Remove(id);
 
             return RedirectToAction("Index");
         }
 
         public ActionResult Update(Reservation item)
         {
-            if (ModelState.IsValid && repo.Update(item))
+            if (ModelState.IsValid && _repo.Update(item))
             {
                 return RedirectToAction("Index");
             }
